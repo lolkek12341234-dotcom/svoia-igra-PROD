@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROVER — Игра</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<svg class="routes-bg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path d="M-50,150 Q200,80 400,250 T900,320 T1300,140" stroke="#ff3b30" stroke-width="2" stroke-dasharray="8 10" fill="none"/>
+    <path d="M-50,650 Q300,540 600,680 T1300,580" stroke="#ff3b30" stroke-width="2" stroke-dasharray="8 10" fill="none"/>
+    <path d="M250,-50 Q320,200 520,320 Q720,440 820,720 Q860,860 900,900" stroke="#ff3b30" stroke-width="2" stroke-dasharray="8 10" fill="none"/>
+    <path d="M1000,-50 Q960,150 1100,300 Q1200,420 1250,700" stroke="#ff3b30" stroke-width="2" stroke-dasharray="8 10" fill="none"/>
+    <circle cx="400" cy="250" r="6" fill="#ff3b30"/>
+    <circle cx="900" cy="320" r="6" fill="#ff3b30"/>
+    <circle cx="600" cy="680" r="6" fill="#ff3b30"/>
+    <circle cx="520" cy="320" r="6" fill="#ff3b30"/>
+    <circle cx="1100" cy="300" r="6" fill="#ff3b30"/>
+</svg>
+
+    <!-- Стартовый экран -->
+<section id="start-screen" class="start-screen">
+
+  <div class="start-layout">
+
+    <aside class="stats-card">
+        <h2 class="stats-title">📊 Статистика</h2>
+
+        <div class="stat-item">
+            <span class="stat-label">Сыграно игр</span>
+            <span class="stat-value" id="games-played-count">0</span>
+        </div>
+
+        <button type="button" id="reset-games-count-btn" class="reset-leaderboard-btn">
+            Сбросить счётчик
+        </button>
+    </aside>
+
+    <div class="setup-card">
+
+       <h1 class="game-logo">
+    <span class="logo-ya">Я</span>
+    <span class="logo-text">Своя игра</span>
+</h1>
+
+        <h2>Настройка игры</h2>
+
+        <p>Выберете количество игроков.</p>
+
+            <button id="new-game-btn" class="primary-button">
+                Новая игра
+            </button>
+
+            <form id="setup-form" class="hidden">
+
+                <label for="player-count">
+                   
+                </label>
+
+                <div class="players-setup">
+
+                 <label>Игроки</label>
+
+                <div id="player-fields"></div>
+
+                 <button type="button" id="add-player-btn" class="add-player-btn">
+                 + Добавить игрока
+                </button>
+               </div>
+                    
+                    
+
+                <button type="submit" class="primary-button">
+                    Начать игру
+                </button>
+
+            </form>
+
+        </div>
+
+        <aside class="leaderboard-card">
+            <h2 class="leaderboard-title">🏆 Топ игроков</h2>
+            <ol id="leaderboard-list" class="leaderboard-list"></ol>
+            <button type="button" id="reset-leaderboard-btn" class="reset-leaderboard-btn">
+                Сбросить результаты
+            </button>
+        </aside>
+
+    </div>
+
+    </section>
+
+
+    <!-- Игровой экран -->
+    <section id="game-screen" class="game-screen hidden">
+
+    <h1 class="game-logo">
+    <span class="logo-ya">Я</span>
+    <span class="logo-text">Своя игра</span>
+</h1>
+
+    <div class="scores"></div>
+
+        <div id="board-wrap">
+            <div id="game-board"></div>
+        </div>
+
+        <button id="reset-btn" class="reset-button">
+            В меню
+        </button>
+
+    </section>
+
+
+   <!-- Окно вопроса -->
+<div id="question-modal" class="hidden">
+
+        <div class="modal-content">
+
+            <div class="timer" id="timer">60</div>
+
+                      <div class="rover-wrap">
+                <img
+                    src="rover-happy.svg"
+                    alt="Робот"
+                    class="rover rover-happy"
+                    id="rover-happy"
+                >
+                <img
+                    src="rover-sad.svg"
+                    alt="Робот грустит"
+                    class="rover rover-sad hidden"
+                    id="rover-sad"
+                >
+            </div>
+
+            <h2 id="question"></h2>
+
+        <div id="options"></div>
+
+        <p id="result"></p>
+
+        <div class="modal-actions">
+            <button id="wrong-btn">Ответ неправильный</button>
+            <button id="close-btn">Закрыть</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+    <!-- Окно победителя -->
+    <div id="winner-modal" class="hidden">
+
+        <div class="modal-content winner-content">
+
+            <h2 id="winner-title"></h2>
+
+            <p id="winner-players"></p>
+
+            <button id="export-csv-btn" class="primary-button export-btn">
+                📄 Скачать результат (CSV)
+            </button>
+
+            <button id="winner-menu-btn" class="primary-button">
+                В меню
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

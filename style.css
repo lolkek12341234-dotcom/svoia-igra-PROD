@@ -1,0 +1,915 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --white: #ffffff;
+    --black: #111111;
+    --gray-dark: #697078;
+    --red: #ff3b30;
+    --red-dark: #d92d25;
+    --border: #d9dde1;
+    --shadow: 0 18px 45px rgba(17, 17, 17, 0.12);
+}
+
+body {
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--black);
+    background:
+        linear-gradient(
+            rgba(255, 255, 255, 0.94),
+            rgba(255, 255, 255, 0.94)
+        ),
+        repeating-linear-gradient(
+            135deg,
+            #f1f2f3 0,
+            #f1f2f3 1px,
+            transparent 1px,
+            transparent 18px
+        );
+    text-align: center;
+}
+
+h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 0 0 28px;
+    font-size: clamp(34px, 6vw, 58px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.06em;
+    text-transform: uppercase;
+}
+
+
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+
+/* Стартовый экран */
+
+.start-screen {
+    min-height: calc(100vh - 48px);
+    display: grid;
+    place-content: center;
+}
+
+.setup-card {
+    width: 100%;
+    padding: 36px;
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    text-align: left;
+}
+
+.setup-card h1 {
+    justify-content: flex-start;
+    font-size: 42px;
+}
+
+.setup-card h2 {
+    margin: 0 0 12px;
+    font-size: 28px;
+}
+
+.setup-card p {
+    margin-bottom: 28px;
+    color: var(--gray-dark);
+    line-height: 1.6;
+}
+
+
+/* Кнопки */
+
+.primary-button,
+.reset-button {
+    border: 0;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+.primary-button {
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+    padding: 15px 24px;
+    background: var(--red);
+    color: var(--white);
+    box-shadow: 0 5px 0 var(--red-dark);
+}
+
+.primary-button:hover {
+    background: #ff5148;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 var(--red-dark);
+}
+
+.primary-button:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 var(--red-dark);
+}
+
+.reset-button {
+    margin-top: 24px;
+    padding: 12px 20px;
+    background: var(--black);
+    color: var(--white);
+}
+
+.reset-button:hover {
+    background: #333333;
+    transform: translateY(-2px);
+}
+
+
+/* Форма */
+
+#setup-form {
+    margin-top: 22px;
+}
+
+#setup-form label {
+    display: block;
+    margin: 18px 0 7px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#setup-form select,
+.single-player-input {
+    display: block;
+    width: 100%;
+    min-height: 46px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    background: #f7f8f9;
+    color: var(--black);
+}
+
+#setup-form select:focus,
+.single-player-input:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.12);
+}
+
+.player-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 18px;
+}
+
+.single-player-input {
+    margin-top: 10px;
+}
+
+
+/* Игровой экран */
+
+.game-screen {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+
+
+/* Счёт */
+
+.scores {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.team-score {
+    min-width: 180px;
+    padding: 15px 22px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--white);
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 8px 22px rgba(17, 17, 17, 0.06);
+}
+
+.team-score span {
+    color: var(--red);
+    font-size: 24px;
+}
+
+.active-team {
+    border: 2px solid var(--red);
+    background: #fff5f4;
+    box-shadow: 0 0 0 4px rgba(255, 59, 48, 0.1);
+}
+
+
+/* Игровое поле */
+
+#board-wrap {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    overflow-x: auto;
+    padding: 6px;
+}
+
+#game-board {
+    width: 100%;
+    min-width: 720px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.category {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 8px;
+    border-radius: 12px;
+    background: var(--black);
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    box-shadow: 0 5px 0 #000000;
+}
+
+.cell {
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 8px;
+    border: 1px solid #d8dadd;
+    border-radius: 12px;
+    background: var(--white);
+    color: var(--black);
+    font-size: 30px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(17, 17, 17, 0.07);
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        color 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.cell:hover {
+    transform: translateY(-4px);
+    border-color: var(--red);
+    background: var(--red);
+    color: var(--white);
+    box-shadow: 0 12px 25px rgba(255, 59, 48, 0.22);
+}
+
+.cell.used {
+    background: #dfe2e5;
+    border-color: #dfe2e5;
+    color: #9aa0a6;
+    cursor: default;
+    box-shadow: none;
+}
+
+.cell.used:hover {
+    transform: none;
+}
+
+
+/* Окна */
+
+#question-modal,
+#winner-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(17, 17, 17, 0.72);
+    backdrop-filter: blur(6px);
+}
+
+.modal-content {
+    width: 100%;
+    max-width: 650px;
+    padding: 34px;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: var(--white);
+    color: var(--black);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+    text-align: left;
+}
+
+#question {
+    margin-bottom: 26px;
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.3;
+}
+
+#options {
+    display: grid;
+    gap: 10px;
+}
+
+.answer-option {
+    width: 100%;
+    padding: 15px 18px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #f7f8f9;
+    color: var(--black);
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.answer-option:hover:not(:disabled) {
+    border-color: var(--red);
+    background: #fff1ef;
+    transform: translateX(4px);
+}
+
+.answer-option:disabled {
+    cursor: default;
+    opacity: 1;
+}
+
+#close-btn {
+    margin-top: 22px;
+    padding: 12px 18px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--black);
+    color: var(--white);
+    font-weight: bold;
+}
+#close-btn {
+    margin-top: 0;
+}
+#close-btn:hover {
+    background: #333333;
+}
+
+#result {
+    min-height: 24px;
+    margin-top: 18px;
+    color: var(--gray-dark);
+    font-weight: bold;
+}
+
+
+/* Победитель */
+
+.winner-content {
+    text-align: center;
+}
+
+.winner-content h2 {
+    margin: 10px 0 14px;
+    font-size: 34px;
+}
+
+.winner-content p {
+    margin-bottom: 26px;
+    color: var(--gray-dark);
+    line-height: 1.5;
+}
+
+
+/* Скрытие */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* Мобильная версия */
+
+@media (max-width: 700px) {
+
+    body {
+        padding: 14px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    .setup-card {
+        padding: 24px;
+        border-radius: 20px;
+    }
+
+    .setup-card h1 {
+        font-size: 32px;
+    }
+
+    .scores {
+        gap: 8px;
+    }
+
+    .team-score {
+        min-width: 140px;
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .team-score span {
+        font-size: 20px;
+    }
+
+    .modal-content {
+        padding: 26px 20px;
+        border-radius: 18px;
+    }
+
+    #question {
+        font-size: 21px;
+    }
+
+    .answer-option {
+        font-size: 15px;
+    }
+}
+
+
+/* На стартовом экране логотип слева */
+
+.setup-card .game-logo {
+    justify-content: flex-start;
+    margin-bottom: 32px;
+}
+
+
+/* На игровом экране логотип по центру */
+
+.game-screen .game-logo {
+    justify-content: center;
+    margin-bottom: 28px;
+}
+
+
+/* Мобильная версия */
+
+@media (max-width: 700px) {
+
+    .game-logo {
+        gap: 10px;
+    }
+
+    .logo-square {
+        width: 46px;
+        height: 46px;
+        border-radius: 11px;
+        font-size: 30px;
+    }
+
+    .logo-text {
+        font-size: 28px;
+    }
+
+}
+/* Логотип игры */
+
+.game-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    margin: 0 0 28px 0;
+
+    font-family: Arial, sans-serif;
+    line-height: 1;
+}
+
+.logo-ya {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 62px;
+    height: 62px;
+
+    background: #e53935;
+    color: white;
+
+    border-radius: 12px;
+
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.logo-text {
+    font-family: Arial, sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    color: #111;
+
+    white-space: nowrap;
+}
+.players-setup {
+    margin-bottom: 20px;
+}
+
+.players-setup > label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+#player-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.add-player-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px 16px;
+
+    background: white;
+    color: #e53935;
+
+    border: 2px solid #e53935;
+    border-radius: 10px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.add-player-btn:hover {
+    background: #fff5f5;
+}
+.add-player-btn:disabled {
+    border-color: var(--border);
+    color: #c5c9cd;
+    background: #f7f8f9;
+    cursor: not-allowed;
+}
+
+.add-player-btn:disabled:hover {
+    background: #f7f8f9;
+}
+.timer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 78px;
+    padding: 8px 18px;
+    margin-bottom: 18px;
+
+    border-radius: 10px;
+    background: var(--black);
+    color: var(--white);
+
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+}
+
+.timer::before {
+    content: "⏱";
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.timer-caution {
+    background: #f5b400;   /* жёлтый — осталось ≤ 10 сек */
+    color: #111;
+    animation: timer-pulse 0.6s ease-in-out infinite alternate;
+}
+
+.timer-danger {
+    background: var(--red);   /* красный — осталось ≤ 5 сек */
+    color: var(--white);
+    animation: timer-pulse 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes timer-pulse {
+    from { transform: scale(1); }
+    to   { transform: scale(1.1); }
+}
+
+/* Кнопки в модалке вопроса */
+.modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+#wrong-btn {
+    padding: 12px 18px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--red);
+    color: var(--white);
+    font-weight: bold;
+}
+
+#wrong-btn:hover {
+    background: var(--red-dark);
+    transform: translateY(-2px);
+}
+
+/* Убираем старый отступ у #close-btn, т.к. он теперь в .modal-actions */
+#close-btn {
+    margin-top: 0;
+}
+/* ============ ФОН-МАРШРУТЫ ============ */
+.routes-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.12;
+}
+
+.start-screen,
+.game-screen {
+    position: relative;
+    z-index: 1;
+}
+
+/* Модалки всегда поверх всего, включая фон-маршруты */
+#question-modal,
+#winner-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+}
+
+/* ============ СТАРТОВЫЙ ЭКРАН: ЛЕЙАУТ ============ */
+.start-layout {
+    display: grid;
+    grid-template-columns: 260px minmax(0, 500px) 340px;
+    gap: 28px;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+}
+
+.leaderboard-card {
+    width: 100%;
+    padding: 32px;
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    text-align: left;
+}
+
+.leaderboard-title {
+    margin: 0 0 18px;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.leaderboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.leaderboard-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: #f7f8f9;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.leaderboard-list li.empty {
+    justify-content: center;
+    color: var(--gray-dark);
+    font-weight: 400;
+    font-style: italic;
+}
+
+.leaderboard-list li:nth-child(1) .lb-name::before { content: "🥇 "; }
+.leaderboard-list li:nth-child(2) .lb-name::before { content: "🥈 "; }
+.leaderboard-list li:nth-child(3) .lb-name::before { content: "🥉 "; }
+
+.lb-score {
+    color: var(--red);
+    font-weight: 900;
+    font-size: 17px;
+}
+
+.reset-leaderboard-btn {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid var(--red);
+    border-radius: 10px;
+    background: var(--white);
+    color: var(--red);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.reset-leaderboard-btn:hover {
+    background: #fff5f4;
+}
+
+/* ============ РОБОТ В МОДАЛКЕ ============ */
+.modal-content {
+    position: relative;
+}
+
+.rover-wrap {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    width: 130px;
+    height: 100px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.rover-wrap img.rover {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+/* Анимации */
+.rover-happy,
+.rover-sad {
+    animation: rover-bob 2.2s ease-in-out infinite;
+}
+
+@keyframes rover-bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-3px); }
+}
+
+/* Оставляем место под робота, чтобы заголовок не заезжал */
+#question {
+    padding-right: 150px;
+}
+/* ============ КНОПКА CSV ============ */
+.export-btn {
+    background: #111 !important;
+    box-shadow: 0 5px 0 #000 !important;
+    margin-top: 12px;
+}
+
+.export-btn:hover {
+    background: #333 !important;
+    box-shadow: 0 7px 0 #000 !important;
+}
+
+/* Мобильная адаптация */
+@media (max-width: 1100px) {
+    .start-layout {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    .rover-wrap {
+        width: 80px;
+        height: 64px;
+        top: 14px;
+        right: 14px;
+    }
+    #question {
+        padding-right: 90px;
+    }
+}
+/* Строка поля игрока с кнопкой удаления */
+.player-field-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.player-field-row .single-player-input {
+    flex: 1;
+    margin-top: 0;
+}
+
+.remove-player-btn {
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid var(--red);
+    border-radius: 10px;
+    background: var(--white);
+    color: var(--red);
+
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1;
+
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.remove-player-btn:hover:not(:disabled) {
+    background: #fff0ef;
+    transform: scale(1.05);
+}
+
+.remove-player-btn:disabled {
+    border-color: var(--border);
+    color: #c5c9cd;
+    cursor: not-allowed;
+    background: #f7f8f9;
+}
+/* ============ КАРТОЧКА СТАТИСТИКИ ============ */
+.stats-card {
+    width: 100%;
+    padding: 32px;
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    text-align: left;
+}
+
+.stats-title {
+    margin: 0 0 18px;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 18px;
+    background: #f7f8f9;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+}
+
+.stat-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gray-dark);
+    letter-spacing: 0.02em;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--red);
+    line-height: 1;
+}
+
+.stats-card .reset-leaderboard-btn {
+    margin-top: 16px;
+}
