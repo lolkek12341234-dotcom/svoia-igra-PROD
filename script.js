@@ -4,7 +4,7 @@ const questions = [
 category: "Panic",
 question: "Как решается Localization?",
 answer: ["Проехать на руках 30 сек.", "Выставить робота через Dynamic homing"],
-options: ["Выставить робота через Dynamic homing", "Проехать на руках 30 сек.", "Перезагружу робота", "Передам координатору"],
+options: ["Выставить робота через Dynamic homing", "Проехать на руках 30 сек.", "Перезагружу робота", "Сразу передам координатору"],
 points: 100
 },
 
@@ -156,7 +156,7 @@ points: 500
     category: "Светофор",
     question: "ПП разделен островком безопасности, длиной больше 5м. Наши действия?",
     answer: "Проехать за два раза остановившись на остравке",
-    options: ["Проехать за два раза остановившись на остравке", "Проехать за один раз, время позволяет", "Поставить полигон Blockage", "Проехать строго в режиме RCMD"],
+    options: ["Проехать за два раза остановившись на остравке", "проехать за один раз, время позволяет", "Поставить полигон Blockage", "Проехать строго в режиме RCMD"],
     points: 100
 },
 {
@@ -201,6 +201,11 @@ let questionAnswered = false;
 let foundAnswers = [];
 let timerInterval = null;
 let timeoutInterval = null;
+
+// Коэффициенты снижения стоимости вопроса за каждую ошибку.
+// 1-я попытка — 100%, 2-я — 60%, 3-я — 40%, 4-я — 25%, 5-я и далее — 15%.
+const ANSWER_VALUE_MULTIPLIERS = [1, 0.6, 0.4, 0.25, 0.15];
+let currentQuestionWrongAttempts = 0;
 const STORAGE_KEY = "svoya-igra-state";
 const LEADERBOARD_KEY = "svoya-igra-leaderboard";
 const GAMES_COUNT_KEY = "svoya-igra-games-count";
@@ -239,6 +244,10 @@ const leaderboardList = document.getElementById("leaderboard-list");
 const resetLeaderboardButton = document.getElementById("reset-leaderboard-btn");
 const gamesPlayedCount = document.getElementById("games-played-count");
 const resetGamesCountButton = document.getElementById("reset-games-count-btn");
+const questionValueElement = document.getElementById("question-value");
+const rulesButton = document.getElementById("rules-btn");
+const rulesModal = document.getElementById("rules-modal");
+const rulesCloseButton = document.getElementById("rules-close-btn");
 
 
 // =====================================================
@@ -270,6 +279,35 @@ function updateActivePlayer() {
     });
 
 }
+// =====================================================
+// СТОИМОСТЬ ВОПРОСА
+// =====================================================
+
+function getCurrentQuestionValue() {
+    if (!currentQuestion) return 0;
+
+    const idx = Math.min(currentQuestionWrongAttempts, ANSWER_VALUE_MULTIPLIERS.length - 1);
+    const raw = currentQuestion.points * ANSWER_VALUE_MULTIPLIERS[idx];
+
+    // Округляем до 5
+    return Math.max(5, Math.round(raw / 5) * 5);
+}
+
+function updateQuestionValueDisplay() {
+    if (!questionValueElement || !currentQuestion) return;
+
+    const value = getCurrentQuestionValue();
+    const base = currentQuestion.points;
+
+    if (value === base) {
+        questionValueElement.textContent = "💰 Вопрос стоит: " + value + " баллов";
+    } else {
+        questionValueElement.textContent =
+            "💰 Стоимость снижена: " + value + " баллов (было " + base + ")";
+    }
+}
+
+
 // =====================================================
 // ТАЙМЕР
 // =====================================================
@@ -908,10 +946,16 @@ for (let row = 0; row < 5; row++) {
             currentQuestion = question;
             currentQuestion.cell = cell;
 
+            // Считываем число предыдущих ошибок по этому вопросу
+            // (сохраняется на DOM-элементе ячейки, чтобы не терять между ходами)
+            currentQuestionWrongAttempts = Number(cell.dataset.wrongAttempts || 0);
+
             questionAnswered = false;
             foundAnswers = [];
 
             questionElement.textContent = question.question;
+
+            updateQuestionValueDisplay();
 
             resultElement.textContent =
                 "Ход игрока " + players[currentPlayer - 1].name;
@@ -982,14 +1026,12 @@ function checkAnswer(selectedAnswer) {
     // ПРАВИЛЬНЫЙ ОТВЕТ
     // -------------------------------------------------
 
-    if (correctAnswers.includes(selectedAnswer)) {
+ if (correctAnswers.includes(selectedAnswer)) {
 
         foundAnswers.push(selectedAnswer);
 
-        const pointsPerAnswer =
-            Math.floor(
-                currentQuestion.points / correctAnswers.length
-            );
+        const currentValue = getCurrentQuestionValue();
+        const pointsPerAnswer = Math.floor(currentValue / correctAnswers.length);
 
         const scoreElement =
             document.getElementById("score" + currentPlayer);
@@ -1095,6 +1137,11 @@ function checkAnswer(selectedAnswer) {
 
         showSadRover();
 
+        // Понижаем стоимость вопроса и запоминаем на ячейке
+        currentQuestionWrongAttempts++;
+        currentQuestion.cell.dataset.wrongAttempts = currentQuestionWrongAttempts;
+        updateQuestionValueDisplay();
+
         // Сброс серии и учёт ошибки
         players[currentPlayer - 1].streak = 0;
         players[currentPlayer - 1].errors += 1;
@@ -1107,9 +1154,11 @@ function checkAnswer(selectedAnswer) {
 
         updateActivePlayer();
 
+        const nextValue = getCurrentQuestionValue();
         resultElement.textContent =
-            "Неправильно! Теперь отвечает игрок " +
-            players[currentPlayer - 1].name;
+            "Неправильно! Теперь отвечает игрок «" +
+            players[currentPlayer - 1].name +
+            "». Вопрос теперь стоит " + nextValue + " баллов.";
 
         // Даём новому игроку полное время на этот же вопрос
         startTimer(getTimeForPoints(currentQuestion.points));
@@ -1134,6 +1183,7 @@ function closeQuestion() {
     currentQuestion = null;
     questionAnswered = false;
     foundAnswers = [];
+    currentQuestionWrongAttempts = 0;
 
     optionsElement.innerHTML = "";
     resultElement.textContent = "";
@@ -1163,6 +1213,12 @@ wrongButton.addEventListener("click", function () {
     }
 
     stopTimer();
+
+    // Если у вопроса была ячейка — увеличиваем число ошибок на ней
+    if (currentQuestion.cell) {
+        const attempts = Number(currentQuestion.cell.dataset.wrongAttempts || 0) + 1;
+        currentQuestion.cell.dataset.wrongAttempts = attempts;
+    }
 
     // Сброс серии и учёт ошибки
     players[currentPlayer - 1].streak = 0;
@@ -1269,6 +1325,37 @@ if (resetGamesCountButton) {
         }
     });
 }
+// =====================================================
+// МОДАЛКА ПРАВИЛ
+// =====================================================
+
+if (rulesButton) {
+    rulesButton.addEventListener("click", function () {
+        rulesModal.classList.remove("hidden");
+    });
+}
+
+if (rulesCloseButton) {
+    rulesCloseButton.addEventListener("click", function () {
+        rulesModal.classList.add("hidden");
+    });
+}
+
+if (rulesModal) {
+    rulesModal.addEventListener("click", function (e) {
+        if (e.target === rulesModal) {
+            rulesModal.classList.add("hidden");
+        }
+    });
+}
+
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && rulesModal && !rulesModal.classList.contains("hidden")) {
+        rulesModal.classList.add("hidden");
+    }
+});
+
+
 // Пытаемся восстановить сохранённую партию при запуске
 loadState();
 // Рисуем топ игроков при загрузке
