@@ -913,3 +913,125 @@ button {
 .stats-card .reset-leaderboard-btn {
     margin-top: 16px;
 }
+/* ============ КНОПКА "ПРАВИЛА ИГРЫ" ============ */
+.secondary-button {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    padding: 14px 24px;
+
+    border: 2px solid var(--red);
+    border-radius: 12px;
+
+    background: var(--white);
+    color: var(--red);
+
+    font-weight: 700;
+    font-size: 16px;
+
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.secondary-button:hover {
+    background: #fff5f4;
+    transform: translateY(-2px);
+}
+
+.secondary-button:active {
+    transform: translateY(1px);
+}
+
+
+/* ============ МОДАЛКА ПРАВИЛ ============ */
+#rules-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(17, 17, 17, 0.72);
+    backdrop-filter: blur(6px);
+}
+
+.rules-content {
+    text-align: left;
+    max-width: 620px;
+    max-height: 88vh;
+    overflow-y: auto;
+}
+
+.rules-content h2 {
+    margin: 0 0 22px;
+    font-size: 26px;
+    text-align: center;
+}
+
+.rules-text h3 {
+    margin: 22px 0 10px;
+    font-size: 17px;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.rules-text h3:first-child {
+    margin-top: 0;
+}
+
+.rules-text p {
+    margin: 0 0 12px;
+    line-height: 1.6;
+    color: var(--black);
+}
+
+.rules-text ol,
+.rules-text ul {
+    margin: 0 0 14px;
+    padding-left: 22px;
+    line-height: 1.6;
+}
+
+.rules-text li {
+    margin-bottom: 6px;
+}
+
+.rules-text .example {
+    padding: 14px 18px;
+    margin: 12px 0 18px;
+    background: #f7f8f9;
+    border-left: 3px solid var(--red);
+    border-radius: 8px;
+}
+
+.rules-text .example b {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--red);
+}
+
+.rules-text .example ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+#rules-close-btn {
+    margin-top: 26px;
+}
+
+
+/* ============ СТОИМОСТЬ ВОПРОСА В МОДАЛКЕ ============ */
+.question-value {
+    display: inline-block;
+    margin-bottom: 18px;
+    padding: 7px 16px;
+
+    background: #fff5f4;
+    color: var(--red);
+
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+}
