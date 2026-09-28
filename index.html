@@ -26,7 +26,7 @@
   <div class="start-layout">
 
     <aside class="stats-card">
-        <h2 class="stats-title">📊 Статистика</h2>
+        <h2 class="stats-title">Статистика</h2>
 
         <div class="stat-item">
             <span class="stat-label">Сыграно игр</span>
@@ -74,6 +74,10 @@
 
                 <button type="submit" class="primary-button">
                     Начать игру
+                </button>
+
+                <button type="button" id="rules-btn" class="primary-button">
+                     Правила игры
                 </button>
 
             </form>
@@ -138,6 +142,8 @@
 
             <h2 id="question"></h2>
 
+            <div id="question-value" class="question-value"></div>
+
         <div id="options"></div>
 
         <p id="result"></p>
@@ -174,7 +180,52 @@
     </div>
 
 
-    <script src="script.js"></script>
+    <!-- Окно правил -->
+    <div id="rules-modal" class="hidden">
+        <div class="modal-content rules-content">
+            <h2> Правила игры</h2>
 
+            <div class="rules-text">
+                <h3>Как играть</h3>
+                <ol>
+                    <li>Выберите количество игроков (2–8) и введите их имена.</li>
+                    <li>Игроки по очереди выбирают вопросы на поле: 5 категорий × 5 вопросов.</li>
+                    <li>Чем дороже вопрос — тем меньше времени даётся на ответ (от 60 до 20 секунд).</li>
+                    <li>Выберите один из вариантов ответа.</li>
+                </ol>
+
+                <h3>Начисление баллов</h3>
+                <p>Каждый вопрос стоит определённое количество баллов (от 100 до 500). Если игрок отвечает <b>неверно</b> — стоимость вопроса снижается для следующего игрока.</p>
+
+                <div class="example">
+                    <b>Пример: вопрос за 100 баллов, 4 варианта ответа</b>
+                    <ul>
+                        <li>1-й игрок отвечает неверно → 2-й играет за <b>60 баллов</b></li>
+                        <li>2-й отвечает неверно → 3-й играет за <b>40 баллов</b></li>
+                        <li>3-й отвечает неверно → 4-й играет за <b>25 баллов</b></li>
+                    </ul>
+                </div>
+
+                <h3>Бонусы</h3>
+                <ul>
+                    <li>🔥 3 правильных ответа подряд — бонус <b>+50 очков</b>.</li>
+                    <li>Если в вопросе несколько правильных ответов — баллы делятся между ними поровну.</li>
+                </ul>
+
+                <h3>Таймер</h3>
+                <ul>
+                    <li>Вопрос за 100 — 60 сек, за 200 — 50 сек, за 300 — 40 сек, за 400 — 30 сек, за 500 — 20 сек.</li>
+                    <li>Если время вышло — ход переходит следующему игроку.</li>
+                </ul>
+            </div>
+
+            <button type="button" id="rules-close-btn" class="primary-button">
+                Понятно
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
