@@ -8,6 +8,10 @@
 </head>
 <body>
 
+    <button type="button" id="theme-toggle-btn" class="theme-toggle" title="Сменить тему">
+    🌙
+</button>
+
 <svg class="routes-bg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <path d="M-50,150 Q200,80 400,250 T900,320 T1300,140" stroke="#ff3b30" stroke-width="2" stroke-dasharray="8 10" fill="none"/>
     <path d="M-50,650 Q300,540 600,680 T1300,580" stroke="#ff3b30" stroke-width="2" stroke-dasharray="8 10" fill="none"/>
@@ -20,8 +24,44 @@
     <circle cx="1100" cy="300" r="6" fill="#ff3b30"/>
 </svg>
 
+    <!-- ЭКРАН ВЫБОРА ИГРЫ -->
+    <section id="select-screen" class="select-screen">
+
+        <h1 class="game-logo">
+            <span class="logo-ya">Я</span>
+            <span class="logo-text">Своя игра</span>
+        </h1>
+
+        <p class="select-subtitle">Выберите игру:</p>
+
+        <div class="select-buttons">
+            <button type="button" class="game-select-btn" id="select-resolver-btn">
+                <span class="game-select-title">Resolver</span>
+                <span class="game-select-desc">Игра для резолверов</span>
+            </button>
+
+            <button type="button" class="game-select-btn game-select-btn--blue" id="select-outsource-btn">
+                <span class="game-select-title">Outsource-Resolver</span>
+                <span class="game-select-desc">Игра для аутсорс-резолверов</span>
+            </button>
+
+            <!-- СКРЫТЫЕ КНОПКИ: чтобы вернуть, убери слово hidden из class -->
+            <button type="button" class="game-select-btn game-select-btn--green hidden" id="select-coordinator-btn">
+                <span class="game-select-title">Coordinator</span>
+                <span class="game-select-desc">Игра для координаторов</span>
+            </button>
+
+            <button type="button" class="game-select-btn game-select-btn--purple hidden" id="select-watcher-btn">
+                <span class="game-select-title">Watcher</span>
+                <span class="game-select-desc">Игра для вотчеров</span>
+            </button>
+        </div>
+
+
+    </section>
+
     <!-- Стартовый экран -->
-<section id="start-screen" class="start-screen">
+<section id="start-screen" class="start-screen hidden">
 
   <div class="start-layout">
 
@@ -45,7 +85,11 @@
     <span class="logo-text">Своя игра</span>
 </h1>
 
-        <h2>Настройка игры</h2>
+        <h2 id="setup-title">Настройка игры</h2>
+
+        <button type="button" id="back-to-select-btn" class="back-button">
+            ← Назад к выбору игры
+        </button>
 
         <p>Выберете количество игроков.</p>
 
@@ -67,10 +111,8 @@
 
                  <button type="button" id="add-player-btn" class="add-player-btn">
                  + Добавить игрока
-                </button>
+               </button>
                </div>
-                    
-                    
 
                 <button type="submit" class="primary-button">
                     Начать игру
@@ -229,3 +271,4 @@
 </body>
 
 </html>
+
