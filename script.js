@@ -1,4 +1,8 @@
-const questions = [
+// =====================================================
+// ИГРА 1: RESOLVER — вопросы
+// =====================================================
+
+const resolverQuestions = [
     // Panic
     {
 category: "Panic",
@@ -81,8 +85,8 @@ points: 500
     {
         category: "Incident detected",
         question: "Нужно ли менять статус смены, когда решаешь Incident detected?",
-        answer: "Да",
-        options: ["Да", "Нен"],
+        answer: "ДА",
+        options: ["ДА", "НЕТ"],
         points: 100
     },
     {
@@ -161,16 +165,16 @@ points: 500
 },
 {
     category: "Светофор",
-    question: "На ПП авария, не проехать. Наши действия?",
+    question: "На пп авария, не проехать. Наши действия?",
     answer: "Поставить полигон Blockage",
-    options: ["Поставить полигон Static на место ДТП", "Поехать когда пойдут люди", "Передать реквест ккоординатору", "Поставить полигон Blockage"],
+    options: ["Поставить полигон Static на место ДТП", "Поехать когда пойдут люди", "Передать реквест коорду", "Поставить полигон Blockage"],
     points: 200
 },
 {
     category: "Светофор",
-    question: "Что делать, если не работает ни один светофор на перекрестке?",
+    question: "Что делать если Не работает не один светофор на перекрестке?",
     answer: "Поставить полигон Blockage",
-    options: ["Проехать через ПП", "Поставить полигон Blockage", "Отдать реквест координатору", "Ждать пока не включится"],
+    options: ["Проехать через ПП", "Поставить полигон Blockage", "Отдать реквест коордам", "Ждать пока не включится"],
     points: 300
 },
 {
@@ -184,10 +188,627 @@ points: 500
     category: "Светофор",
     question: "На ПП стоит регулировщик наши действия?",
     answer: "Поставить полигон Blockage",
-    options: ["Проехать ПП", "Передать реквест координатору", "Поставить полигон Blockage", "Ждать пока палка не посмотрит в лево и ехать как королева"],
+    options: ["Проехать ПП", "Передать реквест коорду", "Поставить полигон Blockage", "Ждать пока палка не посмотрит в лево и ехать как королева"],
     points: 500
 },
 ];
+
+
+// =====================================================
+// ИГРА 2: OUTSOURCE-RESOLVER — вопросы
+// ЗАПОЛНИ СВОИМИ ВОПРОСАМИ! (5 категорий × 5 вопросов)
+// =====================================================
+
+const outsourceQuestions = [
+   
+
+// Категория 1 — Реквесты
+{ category: "Реквесты",
+  question: "Что делать если нет места на парковке?",
+  answer: "Припарковать робота рядом с ней",
+  options: ["Передать Coordinator", "Припарковать робота рядом с ней", "Прожать кнопку Park", "Закрыть реквест как False"],
+  points: 100
+},
+
+{ category: "Реквесты",
+  question: "Что делать если крит ошибка то появляется, то сама исчезает?",
+  answer: "Передать Coordinator",
+  options: ["Перезагрузить робота", "Проехатся 30 сек", "Передать Coordinator", "Передать реквест Resolver"],
+  points: 200
+},
+
+{ category: "Реквесты",
+  question: "Робот застакался перед столбом, отмеченным на карте красным цветом, что делать?",
+  answer: "Объехать в ручном режиме",
+  options: ["Удалить полигон в карте", "Объехать в ручном режиме", "Закрыть реквест как False", "Передать реквест Resolver"],
+  points: 300
+},
+
+{ category: "Реквесты",
+  question: "Какие криты могут решить младшие операторы?",
+  answer: ["Крит по траектории", "Крит по детям"],
+  options: ["Крит по детям", "Крит по  локализации", "Крит по Endpoints", "Крит по траектории"],
+  points: 400
+},
+
+{ category: "Реквесты",
+  question: "При каких характеристиках робота можно закрыть реквест?",
+  answer: ["AUTO", "зеленый ICP", "Отсутствие критов"],
+  options: ["AUTO", "зеленый ICP", "У робота есть критическая ошибка", "Робот в режиме RCMD", "Неправильный 2", "Отсутствие критов"],
+  points: 500
+},
+
+// Категория 2 — Передача реквеста
+{ category: "Передача реквеста",
+  question: "Если с роботом потеряна связь более 30 сек, какие наши действия?",
+  answer: "Передать Coordinator",
+  options: ["Перезагрузить робота", "Передать Coordinator", "Проехатся 30 сек", "Передать реквест Resolver"],
+  points: 100
+},
+
+{ category: "Передача реквеста",
+  question: "Какую резолюцию выбрать при передаче реквеста Coordinator, если у робота сломан флажок?",
+  answer: "Mechanical",
+  options: ["Didn't put", "Road blocked", "Mechanical", "Incident"],
+  points: 200
+},
+
+{ category: "Передача реквеста",
+  question: "Какие типы стака мы передаем оператору?",
+  answer: "Stuck Traffic Lights",
+  options: ["Stuck Traffic Lights", "Stuck Common", "Stuck don’t know where", "Stuck For a long time"],
+  points: 300
+},
+
+{ category: "Передача реквеста",
+  question: "Что делать, если робота дергают за флажок?",
+  answer: "Передать реквест Resolver",
+  options: ["Передать Coordinator", "Заполнить Incident", "Передать реквест Resolver", "Пытатся уехать"],
+  points: 400
+},
+
+{ category: "Передача реквеста",
+  question: "Что делать, если робот стоит на островке безопасности между светло-зелеными пешеходными переходами?",
+  answer: "Передать Resolver",
+  options: ["Отправить быстрый комментарий в map", "Проехать пешиходный переход", "Передать Coordinator", "Передать Resolver"],
+  points: 500
+},
+
+// Категория 3 — Случайная категория
+{ category: "Случайная категория",
+  question: "Пропустил реквест и смена ушла в паузу, что делать?",
+  answer: "Сообщить старшему, открыть смену",
+  options: ["Закрыть смену ", "Сообщить старшему,", "открыть смену", "Встать в Busy", "Ждать с моря погоды"],
+  points: 100
+},
+
+{ category: "Случайная категория",
+  question: "Если твоего робота перехватил Watcher во время решения реквеста. Что делать?",
+  answer: "Закрыть реквест как False",
+  options: ["Закрыть реквест как False", "Забрать обратно", "Передать Resolver", "Закрыть реквест как Done"],
+  points: 200
+},
+
+{ category: "Случайная категория",
+  question: "Камеры робота в грязи и ничего не видно, что делать?",
+  answer: "Передать Coordinator",
+  options: ["Заполнить Incident", "Встать против ветра", "Передать Coordinator", "Передать Resolver"],
+  points: 300
+},
+
+{ category: "Случайная категория",
+  question: "Отметь признаки инцидента",
+  answer: ["Робот причинил вред кому-то", "Робот причинил вред чему-то", "Роботу причинён вред", "Нарушение ПДД"],
+  options: ["Роботу причинён вред", "Ничего не произашло", "Робот причинил вред кому-то", "Робот причинил вред чему-то", "Робота погладили", "Нарушение ПДД"],
+  points: 400
+},
+
+{ category: "Случайная категория",
+  question: "Пришел стак, а робот уже едет на ПП?",
+  answer: "Проследить за роботом, в случае необходимости — оказать помощь. Закрыть реквест, когда робот будет ехать в авто в безопасной зоне",
+  options: ["Заполнить Incident", "Проследить за роботом", "в случае необходимости — оказать помощь", "Закрыть реквест, когда робот будет ехать в авто в безопасной зоне", "Закрыть реквест как False", "Передать Resolver"],
+  points: 500
+},
+
+// Категория 4 — RC
+{ category: "RC",
+  question: "Какой статус заказа, если робот едет к клиенту?",
+  answer: "Heading to",
+  options: ["Accepted order", "Arrived to client", "Heading to", "Returning to"],
+  points: 100
+},
+
+{ category: "RC",
+  question: "Какая кнопка включает/отключает отображение на карте всех роботов?",
+  answer: "Rovers",
+  options: ["Rovers", "Lanes", " Robot routes", "Layers"],
+  points: 200
+},
+
+{ category: "RC",
+  question: "Каким цветом в карте указана велодорожка?",
+  answer: "Голубой",
+  options: ["Желтый", "Голубой", "Крастный", "Зеленый"],
+  points: 300
+},
+
+{ category: "RC",
+  question: "Можно ли ездить по черным линиям?",
+  answer: "Нет",
+  options: ["Незнаю", "Наверное", "Нет", "Да"],
+  points: 400
+},
+
+{ category: "RC",
+  question: "Какая кнопка помечает реквест, как ошибочно сформированный?",
+  answer: "False",
+  options: ["More", "False", "Lanes", "Три точки"],
+  points: 500
+},
+
+// Категория 5 — Инциденты
+{ category: "Инциденты",
+  question: "О робота ударился ребенок",
+  answer: "Столкновение",
+  options: ["Столкновение", "Нарушение ПДД ЭПР", "Акт насилия", "ДТП"],
+  points: 100
+},
+
+{ category: "Инциденты",
+  question: "Робот мешал транспортным средствам на ПП",
+  answer: "Нарушение ПДД ЭПР",
+  options: ["Акт насилия", "Столкновение", "Нарушение ПДД ЭПР", "Инцидента нет"],
+  points: 200
+},
+
+{ category: "Инциденты",
+  question: "На робота поставили пакеты и убрали",
+  answer: "Инцидента нет",
+  options: ["Акт насилия", "Инцидента нет", "Столкновение", "Нарушение ПДД ЭПР"],
+  points: 300
+},
+
+{ category: "Инциденты",
+  question: "Робот пересек высокий бордюр, но не упал",
+  answer: "Нарушение ПДД ЭПР",
+  options: ["Техническая неисправность", "Инцидента нет", "Столкновение", "Нарушение ПДД ЭПР"],
+  points: 400
+},
+
+{ category: "Инциденты",
+  question: "На верхнюю крышку робота приклеили листок",
+  answer: "Акт насилия",
+  options: ["Инцидента нет", "Акт насилия", "Нарушение ПДД ЭПР", "Столкновение"],
+  points: 500
+},
+
+    
+];
+
+// =====================================================
+// ИГРА 3: COORDINATOR — вопросы
+// ЗАПОЛНИ СВОИМИ ВОПРОСАМИ! (5 категорий × 5 вопросов)
+// =====================================================
+
+const coordinatorQuestions = [
+
+
+    // Категория 1
+    { category: "Категория 1",
+     question: "Вопрос 1 (замени меня)", 
+     answer: "Правильный ответ", 
+     options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+     points: 100 
+    },
+
+    { category: "Категория 1",
+     question: "Вопрос 1 (замени меня)", 
+     answer: "Правильный ответ", 
+     options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+     points: 200 
+    },
+
+     { category: "Категория 1",
+     question: "Вопрос 1 (замени меня)", 
+     answer: "Правильный ответ", 
+     options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+     points: 300 
+    },
+
+     { category: "Категория 1",
+     question: "Вопрос 1 (замени меня)", 
+     answer: "Правильный ответ", 
+     options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+     points: 400 
+    },
+
+     { category: "Категория 1",
+     question: "Вопрос 1 (замени меня)", 
+     answer: "Правильный ответ", 
+     options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+     points: 500 
+    },
+
+
+    // Категория 2
+    { category: "Категория 2", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 100 
+    },
+
+        { category: "Категория 2", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 200 
+    },
+
+        { category: "Категория 2", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 300 
+    },
+
+        { category: "Категория 2", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 400 
+    },
+
+        { category: "Категория 2", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 500 
+    },
+   
+    // Категория 3
+
+    { category: "Категория 3", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 100 
+    },
+    
+        { category: "Категория 3", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 200 
+    },
+
+        { category: "Категория 3", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 300 
+    },
+
+        { category: "Категория 3", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 400 
+    },
+
+        { category: "Категория 3", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 500 
+    },
+
+    // Категория 4
+
+    { category: "Категория 4", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 100 
+    },
+
+        { category: "Категория 4", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 200 
+    },
+
+        { category: "Категория 4", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 300 
+    },
+
+        { category: "Категория 4", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 400 
+    },
+
+        { category: "Категория 4", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 500 
+    },
+
+
+
+
+    // Категория 5
+
+    { category: "Категория 5", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 100 
+    },
+
+    { category: "Категория 5", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 200 
+    },
+
+    { category: "Категория 5", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 300 
+    },
+
+    { category: "Категория 5", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 400 
+    },
+
+    { category: "Категория 5", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 500 
+    },
+    
+];
+
+    // =====================================================
+// ИГРА 4: WATCHER — вопросы
+// ЗАПОЛНИ СВОИМИ ВОПРОСАМИ! (5 категорий × 5 вопросов)
+// =====================================================
+
+const watcherQuestions = [
+
+
+    // Категория 1
+    { category: "Категория 1",
+     question: "Вопрос 1 (замени меня)", 
+     answer: "Правильный ответ", 
+     options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+     points: 100 
+    },
+
+    { category: "Категория 1",
+     question: "Вопрос 1 (замени меня)", 
+     answer: "Правильный ответ", 
+     options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+     points: 200 
+    },
+
+     { category: "Категория 1",
+     question: "Вопрос 1 (замени меня)", 
+     answer: "Правильный ответ", 
+     options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+     points: 300 
+    },
+
+     { category: "Категория 1",
+     question: "Вопрос 1 (замени меня)", 
+     answer: "Правильный ответ", 
+     options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+     points: 400 
+    },
+
+     { category: "Категория 1",
+     question: "Вопрос 1 (замени меня)", 
+     answer: "Правильный ответ", 
+     options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+     points: 500 
+    },
+
+
+    // Категория 2
+    { category: "Категория 2", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 100 
+    },
+
+        { category: "Категория 2", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 200 
+    },
+
+        { category: "Категория 2", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 300 
+    },
+
+        { category: "Категория 2", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 400 
+    },
+
+        { category: "Категория 2", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 500 
+    },
+   
+    // Категория 3
+
+    { category: "Категория 3", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 100 
+    },
+    
+        { category: "Категория 3", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 200 
+    },
+
+        { category: "Категория 3", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 300 
+    },
+
+        { category: "Категория 3", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 400 
+    },
+
+        { category: "Категория 3", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 500 
+    },
+
+    // Категория 4
+
+    { category: "Категория 4", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 100 
+    },
+
+        { category: "Категория 4", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 200 
+    },
+
+        { category: "Категория 4", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 300 
+    },
+
+        { category: "Категория 4", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 400 
+    },
+
+        { category: "Категория 4", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 500 
+    },
+
+
+
+
+    // Категория 5
+
+    { category: "Категория 5", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 100 
+    },
+
+    { category: "Категория 5", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 200 
+    },
+
+    { category: "Категория 5", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 300 
+    },
+
+    { category: "Категория 5", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 400 
+    },
+
+    { category: "Категория 5", 
+    question: "Вопрос 1 (замени меня)", 
+    answer: "Правильный ответ", 
+    options: ["Правильный ответ", "Неправильный 1", "Неправильный 2", "Неправильный 3"], 
+    points: 500 
+    },
+    
+];
+
+
+// =====================================================
+// НАБОРЫ ИГР
+// =====================================================
+
+const GAME_SETS = {
+    resolver: {
+        title: "Resolver",
+        questions: resolverQuestions
+    },
+    outsource: {
+        title: "Outsource-Resolver",
+        questions: outsourceQuestions
+    },
+    coordinator: {
+        title: "Coordinator",
+        questions: coordinatorQuestions
+    },
+    watcher: {
+        title: "Watcher",
+        questions: watcherQuestions
+    }
+};
+
+
+// Текущая выбранная игра
+let currentGameMode = null;
+
+// Активные вопросы текущей игры
+let questions = [];
 
 
 // =====================================================
@@ -203,14 +824,30 @@ let timerInterval = null;
 let timeoutInterval = null;
 
 // Коэффициенты снижения стоимости вопроса за каждую ошибку.
-// 1-я попытка — 100%, 2-я — 60%, 3-я — 40%, 4-я — 25%, 5-я и далее — 15%.
 const ANSWER_VALUE_MULTIPLIERS = [1, 0.6, 0.4, 0.25, 0.15];
 let currentQuestionWrongAttempts = 0;
-const STORAGE_KEY = "svoya-igra-state";
-const LEADERBOARD_KEY = "svoya-igra-leaderboard";
-const GAMES_COUNT_KEY = "svoya-igra-games-count";
 let gameStartTime = Date.now();
 let gameCounted = false;
+
+// Ключи хранилища — зависят от выбранной игры
+let STORAGE_KEY = null;
+let LEADERBOARD_KEY = null;
+let GAMES_COUNT_KEY = null;
+
+function setGameMode(mode) {
+    currentGameMode = mode;
+    const set = GAME_SETS[mode];
+    questions = set.questions;
+    STORAGE_KEY = "svoya-igra-state-" + mode;
+    LEADERBOARD_KEY = "svoya-igra-leaderboard-" + mode;
+    GAMES_COUNT_KEY = "svoya-igra-games-count-" + mode;
+
+    // Обновляем заголовок на стартовом экране
+    const setupTitle = document.getElementById("setup-title");
+    if (setupTitle) {
+        setupTitle.textContent = "Настройка игры: " + set.title;
+    }
+}
 
 
 // =====================================================
@@ -225,6 +862,7 @@ const resultElement = document.getElementById("result");
 const closeButton = document.getElementById("close-btn");
 const resetButton = document.getElementById("reset-btn");
 const scoresElement = document.querySelector(".scores");
+const selectScreen = document.getElementById("select-screen");
 const startScreen = document.getElementById("start-screen");
 const gameScreen = document.getElementById("game-screen");
 const newGameButton = document.getElementById("new-game-btn");
@@ -248,19 +886,27 @@ const questionValueElement = document.getElementById("question-value");
 const rulesButton = document.getElementById("rules-btn");
 const rulesModal = document.getElementById("rules-modal");
 const rulesCloseButton = document.getElementById("rules-close-btn");
+const selectResolverButton = document.getElementById("select-resolver-btn");
+const selectOutsourceButton = document.getElementById("select-outsource-btn");
+const selectCoordinatorButton = document.getElementById("select-coordinator-btn");
+const selectWatcherButton = document.getElementById("select-watcher-btn");
+const backToSelectButton = document.getElementById("back-to-select-btn");
+
 
 
 // =====================================================
-// КАТЕГОРИИ
+// КАТЕГОРИИ (вычисляются из вопросов текущей игры)
 // =====================================================
 
-const categories = [
-    "Panic",
-    "Stuck",
-    "Incident detected",
-    "Передача координатору",
-    "Светофор"
-];
+function getCategories() {
+    const cats = [];
+    questions.forEach(function (q) {
+        if (!cats.includes(q.category)) {
+            cats.push(q.category);
+        }
+    });
+    return cats;
+}
 
 
 // =====================================================
@@ -289,7 +935,6 @@ function getCurrentQuestionValue() {
     const idx = Math.min(currentQuestionWrongAttempts, ANSWER_VALUE_MULTIPLIERS.length - 1);
     const raw = currentQuestion.points * ANSWER_VALUE_MULTIPLIERS[idx];
 
-    // Округляем до 5
     return Math.max(5, Math.round(raw / 5) * 5);
 }
 
@@ -360,11 +1005,9 @@ function onTimeOut() {
         return;
     }
 
-    // Сброс серии и учёт ошибки текущего игрока
     players[currentPlayer - 1].streak = 0;
     players[currentPlayer - 1].errors += 1;
 
-    // Отключаем все доступные кнопки — во время паузы отвечать нельзя
     const buttons = document.querySelectorAll(".answer-option");
     const previouslyEnabled = [];
 
@@ -398,11 +1041,9 @@ function onTimeOut() {
         clearInterval(timeoutInterval);
         timeoutInterval = null;
 
-        // Меняем игрока
         currentPlayer = nextPlayerNumber;
         updateActivePlayer();
 
-        // Возвращаем только те кнопки, что не были выключены ранее
         previouslyEnabled.forEach(function (b) {
             b.disabled = false;
         });
@@ -511,7 +1152,7 @@ function exportCSV() {
     const rows = [];
     const dateStr = new Date().toLocaleString("ru-RU");
 
-    rows.push(["Партия:", dateStr]);
+    rows.push(["Партия (" + (GAME_SETS[currentGameMode] ? GAME_SETS[currentGameMode].title : "") + "):", dateStr]);
     rows.push([]);
     rows.push(["Место", "Игрок", "Очки", "Верных ответов", "Ошибок", "Макс. серия", "Время игры"]);
 
@@ -542,7 +1183,7 @@ function exportCSV() {
     const a = document.createElement("a");
     a.href = url;
     const stamp = new Date().toISOString().slice(0, 16).replace("T", "_").replace(":", "-");
-    a.download = "svoya-igra_" + stamp + ".csv";
+    a.download = currentGameMode + "_igra_" + stamp + ".csv";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -577,6 +1218,7 @@ function saveState() {
     });
 
     const state = {
+        gameMode: currentGameMode,
         players: playersState,
         currentPlayer: currentPlayer,
         usedCells: usedCells,
@@ -623,7 +1265,6 @@ function loadState() {
 
         renderScores(players.map(function (p) { return p.name; }));
 
-        // Восстанавливаем очки
         players.forEach(function (player, index) {
             const scoreEl = document.getElementById("score" + (index + 1));
             if (scoreEl) {
@@ -631,7 +1272,6 @@ function loadState() {
             }
         });
 
-        // Отмечаем использованные ячейки
         if (state.usedCells && state.usedCells.length) {
             document.querySelectorAll(".cell").forEach(function (cell) {
                 if (state.usedCells.includes(Number(cell.dataset.index))) {
@@ -691,20 +1331,17 @@ function updatePlayerFieldControls() {
     const rows = playerFields.querySelectorAll(".player-field-row");
 
     rows.forEach(function (row, index) {
-        // Обновляем placeholder, чтобы нумерация была сквозной
         const input = row.querySelector("input");
         if (input) {
             input.placeholder = `Имя игрока ${index + 1}`;
         }
 
-        // Блокируем крестик, если игроков уже минимум
         const btn = row.querySelector(".remove-player-btn");
         if (btn) {
             btn.disabled = rows.length <= 2;
         }
     });
 
-    // Кнопка "Добавить игрока" тоже блочится на максимуме
     if (addPlayerButton) {
         addPlayerButton.disabled = rows.length >= 8;
     }
@@ -800,12 +1437,6 @@ function openSetup() {
 
 
 // =====================================================
-// НАЧАЛО ИГРЫ
-// =====================================================
-
-
-
-// =====================================================
 // ВОЗВРАТ В МЕНЮ
 // =====================================================
 
@@ -822,10 +1453,14 @@ function returnToMenu() {
     gameScreen.classList.add("hidden");
     startScreen.classList.remove("hidden");
 
-    setupForm.classList.add("hidden");
-    newGameButton.classList.remove("hidden");
+    // Сразу открываем форму с вводом игроков
+    openSetup();
+
+    renderLeaderboard();
+    renderGamesCount();
 
 }
+
 
 
 // =====================================================
@@ -845,7 +1480,6 @@ function isGameFinished() {
 
 function showWinner() {
 
-    // Учитываем партию только один раз
     if (!gameCounted) {
         incrementGamesCount();
         gameCounted = true;
@@ -888,7 +1522,6 @@ function showWinner() {
 
     }
 
-    // Пишем всех игроков в Топ
     players.forEach(function (player, index) {
         const scoreEl = document.getElementById("score" + (index + 1));
         const finalScore = scoreEl ? Number(scoreEl.textContent) : 0;
@@ -903,96 +1536,95 @@ function showWinner() {
 
 
 // =====================================================
-// СОЗДАНИЕ КАТЕГОРИЙ
+// СОЗДАНИЕ ИГРОВОГО ПОЛЯ (для текущей игры)
 // =====================================================
 
-for (let i = 0; i < categories.length; i++) {
+function buildBoard() {
 
-    const category = document.createElement("div");
+    board.innerHTML = "";
 
-    category.className = "category";
-    category.textContent = categories[i];
+    const categories = getCategories();
 
-    board.appendChild(category);
+    // Категории
+    for (let i = 0; i < categories.length; i++) {
 
-}
+        const category = document.createElement("div");
 
+        category.className = "category";
+        category.textContent = categories[i];
 
-// =====================================================
-// СОЗДАНИЕ КЛЕТОК
-// =====================================================
-
-// 5 рядов по 5 вопросов
-for (let row = 0; row < 5; row++) {
-
-    // 5 категорий
-    for (let category = 0; category < 5; category++) {
-
-        const index = category * 5 + row;
-        const question = questions[index];
-
-        const cell = document.createElement("div");
-
-        cell.className = "cell";
-        cell.textContent = question.points;
-        cell.dataset.index = index;
-
-        cell.addEventListener("click", function () {
-
-            if (cell.classList.contains("used")) {
-                return;
-            }
-
-            currentQuestion = question;
-            currentQuestion.cell = cell;
-
-            // Считываем число предыдущих ошибок по этому вопросу
-            // (сохраняется на DOM-элементе ячейки, чтобы не терять между ходами)
-            currentQuestionWrongAttempts = Number(cell.dataset.wrongAttempts || 0);
-
-            questionAnswered = false;
-            foundAnswers = [];
-
-            questionElement.textContent = question.question;
-
-            updateQuestionValueDisplay();
-
-            resultElement.textContent =
-                "Ход игрока " + players[currentPlayer - 1].name;
-
-            optionsElement.innerHTML = "";
-
-            // Создаём варианты ответа
-            for (let j = 0; j < question.options.length; j++) {
-
-                const optionButton = document.createElement("button");
-
-                optionButton.textContent = question.options[j];
-                optionButton.className = "answer-option";
-
-                optionButton.addEventListener("click", function () {
-
-                    checkAnswer(question.options[j]);
-
-                });
-
-                optionsElement.appendChild(optionButton);
-
-            }
-
-             modal.classList.remove("hidden");
-
-            // Показываем весёлого робота по умолчанию
-            showHappyRover();
-
-            // Запускаем таймер для этого вопроса
-            startTimer(getTimeForPoints(question.points));
-        });
-
-        board.appendChild(cell);
+        board.appendChild(category);
 
     }
 
+    // Клетки: 5 рядов по числу категорий
+    for (let row = 0; row < 5; row++) {
+
+        for (let category = 0; category < categories.length; category++) {
+
+            const index = category * 5 + row;
+            const question = questions[index];
+
+            if (!question) continue;
+
+            const cell = document.createElement("div");
+
+            cell.className = "cell";
+            cell.textContent = question.points;
+            cell.dataset.index = index;
+
+            cell.addEventListener("click", function () {
+
+                if (cell.classList.contains("used")) {
+                    return;
+                }
+
+                currentQuestion = question;
+                currentQuestion.cell = cell;
+
+                currentQuestionWrongAttempts = Number(cell.dataset.wrongAttempts || 0);
+
+                questionAnswered = false;
+                foundAnswers = [];
+
+                questionElement.textContent = question.question;
+
+                updateQuestionValueDisplay();
+
+                resultElement.textContent =
+                    "Ход игрока " + players[currentPlayer - 1].name;
+
+                optionsElement.innerHTML = "";
+
+                for (let j = 0; j < question.options.length; j++) {
+
+                    const optionButton = document.createElement("button");
+
+                    optionButton.textContent = question.options[j];
+                    optionButton.className = "answer-option";
+
+                    optionButton.addEventListener("click", function () {
+
+                        checkAnswer(question.options[j]);
+
+                    });
+
+                    optionsElement.appendChild(optionButton);
+
+                }
+
+                modal.classList.remove("hidden");
+
+                showHappyRover();
+
+                startTimer(getTimeForPoints(question.points));
+            });
+
+            board.appendChild(cell);
+
+        }
+
+    }
 }
 
 
@@ -1014,7 +1646,6 @@ function checkAnswer(selectedAnswer) {
         ? currentQuestion.answer
         : [currentQuestion.answer];
 
-    // Если ответ уже выбирали
     if (foundAnswers.includes(selectedAnswer)) {
         return;
     }
@@ -1043,7 +1674,6 @@ function checkAnswer(selectedAnswer) {
             currentScore + pointsPerAnswer;
 
 
-        // Красим правильный ответ
         buttons.forEach(function (button) {
 
             if (button.textContent === selectedAnswer) {
@@ -1056,15 +1686,11 @@ function checkAnswer(selectedAnswer) {
 
         });
 
-
-    
-
         // Все правильные ответы найдены
         if (foundAnswers.length === correctAnswers.length) {
 
             questionAnswered = true;
 
-            // Обновляем статистику игрока
             const player = players[currentPlayer - 1];
             player.correct += 1;
             player.streak += 1;
@@ -1072,7 +1698,6 @@ function checkAnswer(selectedAnswer) {
                 player.maxStreak = player.streak;
             }
 
-            // Бонус за каждые 3 правильных подряд
             if (player.streak % 3 === 0) {
                 const bonus = 50;
                 scoreElement.textContent = Number(scoreElement.textContent) + bonus;
@@ -1103,8 +1728,7 @@ function checkAnswer(selectedAnswer) {
 
         } else {
 
-            // Ход остаётся у этого игрока
-                      resultElement.textContent =
+            resultElement.textContent =
                 "Правильно! +" +
                 pointsPerAnswer +
                 " очков. " +
@@ -1113,7 +1737,6 @@ function checkAnswer(selectedAnswer) {
         }
 
     }
-
 
 
     // -------------------------------------------------
@@ -1137,16 +1760,13 @@ function checkAnswer(selectedAnswer) {
 
         showSadRover();
 
-        // Понижаем стоимость вопроса и запоминаем на ячейке
         currentQuestionWrongAttempts++;
         currentQuestion.cell.dataset.wrongAttempts = currentQuestionWrongAttempts;
         updateQuestionValueDisplay();
 
-        // Сброс серии и учёт ошибки
         players[currentPlayer - 1].streak = 0;
         players[currentPlayer - 1].errors += 1;
 
-        // При ошибке меняем игрока
         currentPlayer =
             currentPlayer === players.length
                 ? 1
@@ -1160,7 +1780,6 @@ function checkAnswer(selectedAnswer) {
             players[currentPlayer - 1].name +
             "». Вопрос теперь стоит " + nextValue + " баллов.";
 
-        // Даём новому игроку полное время на этот же вопрос
         startTimer(getTimeForPoints(currentQuestion.points));
 
         saveState();
@@ -1197,6 +1816,56 @@ function closeQuestion() {
 }
 
 // =====================================================
+// ВЫБОР ИГРЫ
+// =====================================================
+
+function openGame(mode) {
+    setGameMode(mode);
+
+    selectScreen.classList.add("hidden");
+    startScreen.classList.remove("hidden");
+
+    buildBoard();
+
+    renderLeaderboard();
+    renderGamesCount();
+
+    // Сразу открываем форму с вводом игроков (без кнопки "Новая игра")
+    openSetup();
+
+    // Пытаемся восстановить сохранённую партию этой игры
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+        loadState();
+    }
+}
+
+
+if (selectResolverButton) {
+    selectResolverButton.addEventListener("click", function () {
+        openGame("resolver");
+    });
+}
+
+if (selectOutsourceButton) {
+    selectOutsourceButton.addEventListener("click", function () {
+        openGame("outsource");
+    });
+}
+if (selectCoordinatorButton) {
+    selectCoordinatorButton.addEventListener("click", function () {
+        openGame("coordinator");
+    });
+}
+
+if (selectWatcherButton) {
+    selectWatcherButton.addEventListener("click", function () {
+        openGame("watcher");
+    });
+}
+
+
+// =====================================================
 // ОБРАБОТЧИКИ КНОПОК
 // =====================================================
 
@@ -1214,13 +1883,11 @@ wrongButton.addEventListener("click", function () {
 
     stopTimer();
 
-    // Если у вопроса была ячейка — увеличиваем число ошибок на ней
     if (currentQuestion.cell) {
         const attempts = Number(currentQuestion.cell.dataset.wrongAttempts || 0) + 1;
         currentQuestion.cell.dataset.wrongAttempts = attempts;
     }
 
-    // Сброс серии и учёт ошибки
     players[currentPlayer - 1].streak = 0;
     players[currentPlayer - 1].errors += 1;
 
@@ -1355,10 +2022,54 @@ document.addEventListener("keydown", function (e) {
     }
 });
 
+// =====================================================
+// КНОПКА "НАЗАД К ВЫБОРУ ИГРЫ"
+// =====================================================
 
-// Пытаемся восстановить сохранённую партию при запуске
-loadState();
-// Рисуем топ игроков при загрузке
-renderLeaderboard();
-// Рисуем счётчик сыгранных игр
-renderGamesCount();
+if (backToSelectButton) {
+    backToSelectButton.addEventListener("click", function () {
+
+        stopTimer();
+        closeQuestion();
+
+        startScreen.classList.add("hidden");
+        gameScreen.classList.add("hidden");
+        winnerModal.classList.add("hidden");
+        selectScreen.classList.remove("hidden");
+
+        setupForm.classList.add("hidden");
+        newGameButton.classList.remove("hidden");
+
+    });
+}
+
+// =====================================================
+// ТЁМНАЯ ТЕМА
+// =====================================================
+
+const THEME_KEY = "svoya-igra-theme";
+const themeToggleButton = document.getElementById("theme-toggle-btn");
+
+function applyTheme(theme) {
+    if (theme === "dark") {
+        document.body.classList.add("dark-theme");
+        if (themeToggleButton) themeToggleButton.textContent = "☀️";
+    } else {
+        document.body.classList.remove("dark-theme");
+        if (themeToggleButton) themeToggleButton.textContent = "🌙";
+    }
+}
+
+// Восстанавливаем сохранённую тему при загрузке
+applyTheme(localStorage.getItem(THEME_KEY) || "light");
+
+if (themeToggleButton) {
+    themeToggleButton.addEventListener("click", function () {
+        const isDark = document.body.classList.contains("dark-theme");
+        const nextTheme = isDark ? "light" : "dark";
+        localStorage.setItem(THEME_KEY, nextTheme);
+        applyTheme(nextTheme);
+    });
+}
+
+
